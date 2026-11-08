@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ecom3d Security Policy</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<p class="nav"><a href="index.html">ecom3d policies</a> · <a href="privacy.html">Privacy Policy</a></p>
+<h1>Information Security Policy</h1>
+<p class="meta">ecom3d · Version 1.0 · Effective 2026-11-08 · Owner and Data Protection Officer: Rodrigo B. Probst · <a href="mailto:rodbeka@gmail.com">rodbeka@gmail.com</a></p>
+
+<h2>1. Scope</h2>
+<p>ecom3d is a self-hosted application that keeps a seller's product catalog, stock and prices in sync with marketplaces (Mercado Livre and TikTok Shop). It is operated by an individual developer in Brazil. This policy covers the application, the workstation that hosts it, its source code and all data obtained through marketplace APIs. It is reviewed at least once a year and after any significant change.</p>
+
+<h2>2. Network protection</h2>
+<ul>
+<li>The application runs on a single dedicated workstation in Brazil; there is no cloud database or third-party storage.</li>
+<li>Internal services (database, APIs) are not reachable from the network. The host firewall accepts inbound connections only from the private local network.</li>
+<li>Internet access reaches only an allow-list of marketplace webhook and OAuth callback endpoints through an encrypted tunnel; the application screens are not exposed to the internet.</li>
+<li>Webhooks are rate-limited and size-limited; TikTok Shop webhooks are rejected unless their HMAC signature is valid. Errors returned to the internet contain no internal details.</li>
+</ul>
+
+<h2>3. Endpoint protection</h2>
+<ul>
+<li>Antivirus with real-time protection (Microsoft Defender) and automatic operating system security updates.</li>
+<li>Software dependencies and container images are pinned and kept updated (section 8).</li>
+</ul>
+
+<h2>4. Security baseline</h2>
+<ul>
+<li>Device-bound sign-in (Windows Hello) and automatic screen lock; the screen is locked whenever the workstation is unattended.</li>
+<li>Multi-factor authentication on every account with access to the system or its data (e-mail, source code hosting, marketplace and partner portals).</li>
+<li>Application passwords stored hashed; login attempts rate-limited.</li>
+<li>Secrets are kept only in local configuration excluded from version control.</li>
+<li>Clean desk: personal data is not printed or written down.</li>
+</ul>
+
+<h2>5. Access control</h2>
+<ul>
+<li>Least privilege: access to personal data only for people who need it to fulfil the seller's orders (currently one authorized user).</li>
+<li>Role-based access in the application; new users receive the lowest role needed.</li>
+<li>Only the marketplace API scopes the integration needs are requested.</li>
+<li>Quarterly access review; access is revoked as soon as it is no longer needed.</li>
+</ul>
+
+<h2>6. Data classification and encryption</h2>
+<ul>
+<li>Data is classified as Secret (credentials, tokens), Personal (buyer data), Confidential (prices, sales) or Public (published listings).</li>
+<li>At rest: full-disk encryption (BitLocker); marketplace tokens additionally encrypted at field level with authenticated encryption (libsodium XSalsa20-Poly1305).</li>
+<li>In transit: TLS for all traffic, including the local network.</li>
+<li>Logs do not contain secrets, tokens or personal data from database queries.</li>
+</ul>
+
+<h2>7. Incident response</h2>
+<ul>
+<li>Incident owner: the Data Protection Officer. Incidents can be reported to <a href="mailto:rodbeka@gmail.com">rodbeka@gmail.com</a>.</li>
+<li>Procedure: record, contain (cut internet access, revoke and rotate tokens and secrets), eradicate, recover, review.</li>
+<li>Notification: TikTok Shop and affected sellers within 24 hours of confirming an incident involving their data; the Brazilian data protection authority (ANPD) and data subjects when required by the LGPD, within 3 working days.</li>
+</ul>
+
+<h2>8. Vulnerability management</h2>
+<ul>
+<li>Weekly automated dependency scanning and audits before each release; antivirus and OS updates on the host.</li>
+<li>Findings rated by severity; critical fixed within 7 days, high within 30 days, others in the next regular update, with mitigation when no fix exists.</li>
+<li>Automated test suite run after every update before deployment.</li>
+</ul>
+</main>
+</body>
+</html>
